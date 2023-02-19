@@ -47,6 +47,8 @@ public class Car implements Serializable {
   private String category;
   private String company;
 
+  private boolean isDeleted = false;
+
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "car_id",
       referencedColumnName = "id"

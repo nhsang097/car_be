@@ -15,8 +15,9 @@ public class CarServiceImpl implements CarsService {
 
 
   @Override
+
   public List<Car> getAllCars() {
-    return carRepository.findAll();
+    return carRepository.findByIsDeletedFalse();
   }
 
   @Override
