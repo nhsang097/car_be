@@ -30,6 +30,7 @@ public class Car implements Serializable {
   @Column(name = "id", nullable = false)
   private Long id;
 
+  @Column
   private String name;
 
   private int stock;
