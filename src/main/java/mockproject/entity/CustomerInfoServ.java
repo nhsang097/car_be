@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import mockproject.enumerates.ECustomerGender;
 import mockproject.enumerates.EServiceArea;
 
 @Data
@@ -17,39 +16,37 @@ import mockproject.enumerates.EServiceArea;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerInfoServ {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
 
-    @Column(nullable = false)
-    @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Name cannot contain special characters")
-    private String customerName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long customerId;
 
-    @Column(nullable = false)
-    private Date customerBirthday;
+  @Column(nullable = false)
+  @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Name cannot contain special characters")
+  private String customerName;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ECustomerGender customerGender;
+  @Column(nullable = false)
+  private Date customerBirthday;
 
-    @Column(nullable = false)
-    private String customerPhone;
+  @Column(nullable = false)
+  private String customerGender;
 
-    @Column(nullable = false)
-    private Date dateAppointment;
+  public static final String PHONE_PATTERN = "^\\+84\\d{9,10}$";
+  @Pattern(regexp = PHONE_PATTERN, message = "Please provide a valid phone number")
+  @Column(nullable = false)
+  private String customerPhone;
 
-    @Column(nullable = false)
-    private String serviceName;
+  @Column(nullable = false)
+  private Date dateAppointment;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EServiceArea serviceArea;
+  @Column(nullable = false)
+  private String serviceArea;
 
-    @Column(nullable = false)
-    private String status;
+  @Column(nullable = false)
+  private String ServiceName;
 
-  @OneToMany( cascade = CascadeType.ALL)
-  @JoinColumn(name = "Customer_id", referencedColumnName = "customerId")
-  private List<CarServices> carServices;
+  @Column(nullable = false)
+  private String status;
+
 }
 

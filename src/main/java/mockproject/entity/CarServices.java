@@ -17,8 +17,7 @@ public class CarServices {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long carServiceId;
-  @Enumerated(EnumType.STRING)
-  private ECarServicesName carServiceName;
+  private String carServiceName;
   private String carServiceImage;
 
   @Column(length = 2000)

@@ -11,5 +11,6 @@ public interface CarServicesInService {
   void deleteCarServiceById(Long carServiceID);
   CarServices updateCarService(Long carServiceID, CarServices carService);
   CarServices getCarServiceById(Long carServiceID);
+//  public CarServices findByCarServiceName(String carServiceName);
 
 }

@@ -1,6 +1,8 @@
 package mockproject.service.impl;
 
+import mockproject.entity.CarServices;
 import mockproject.entity.CustomerInfoServ;
+import mockproject.repository.CarServicesRepository;
 import mockproject.repository.CustomerInfoServRepository;
 import mockproject.service.CustomerInfoServService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,8 @@ public class CustomerInfoServImpl implements CustomerInfoServService {
 
   @Autowired
   private CustomerInfoServRepository customerInfoServRepository;
-
+  @Autowired
+  private CarServicesRepository carServicesRepository;
   @Override
   public List<CustomerInfoServ> getAllCustomerInfo() {
     return customerInfoServRepository.findAll();
@@ -45,7 +48,6 @@ public class CustomerInfoServImpl implements CustomerInfoServService {
     existingCustomerInfo.setCustomerGender(customerInfoServ.getCustomerGender());
     existingCustomerInfo.setCustomerPhone(customerInfoServ.getCustomerPhone());
     existingCustomerInfo.setDateAppointment(customerInfoServ.getDateAppointment());
-    existingCustomerInfo.setServiceName(customerInfoServ.getServiceName());
     existingCustomerInfo.setServiceArea(customerInfoServ.getServiceArea());
     existingCustomerInfo.setStatus(customerInfoServ.getStatus());
 
