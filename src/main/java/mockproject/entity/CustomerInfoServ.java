@@ -1,5 +1,6 @@
 package mockproject.entity;
 
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import mockproject.enumerates.ECustomerGender;
+import mockproject.enumerates.EServiceArea;
 
 @Data
 @Entity
@@ -19,13 +22,15 @@ public class CustomerInfoServ {
     private Long customerId;
 
     @Column(nullable = false)
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Name cannot contain special characters")
     private String customerName;
 
     @Column(nullable = false)
     private Date customerBirthday;
 
     @Column(nullable = false)
-    private String customerGender;
+    @Enumerated(EnumType.STRING)
+    private ECustomerGender customerGender;
 
     @Column(nullable = false)
     private String customerPhone;
@@ -37,7 +42,8 @@ public class CustomerInfoServ {
     private String serviceName;
 
     @Column(nullable = false)
-    private String serviceArea;
+    @Enumerated(EnumType.STRING)
+    private EServiceArea serviceArea;
 
     @Column(nullable = false)
     private String status;

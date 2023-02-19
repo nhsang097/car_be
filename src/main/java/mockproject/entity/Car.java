@@ -39,7 +39,7 @@ public class Car implements Serializable {
 
   private int reviews;
   private String image;
-  private String feature;
+  private String featured;
   private String videoDesc;
   private double price;
   @Column (length = 2000 )
@@ -54,5 +54,9 @@ public class Car implements Serializable {
       referencedColumnName = "id"
   )
   private List<Images> images;
+
+  public void setIsDeleted(boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
 }
 

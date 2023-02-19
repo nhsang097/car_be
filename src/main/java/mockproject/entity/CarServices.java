@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import mockproject.enumerates.ECarServicesName;
 
 @Data
 @Entity
@@ -16,8 +17,8 @@ public class CarServices {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long carServiceId;
-
-  private String carServiceName;
+  @Enumerated(EnumType.STRING)
+  private ECarServicesName carServiceName;
   private String carServiceImage;
 
   @Column(length = 2000)

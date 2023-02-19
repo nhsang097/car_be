@@ -19,4 +19,6 @@ public interface CarsService {
   public Car updateCar(Long id, Car car);
 
   Car findById (Long id);
+
+  void deleteAllCars();
 }

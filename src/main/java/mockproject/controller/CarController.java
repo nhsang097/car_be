@@ -18,6 +18,10 @@ public class CarController {
   public Car addCar(@RequestBody Car car) throws NullPointerException {
     return carsService.addCar(car);
   }
+  @DeleteMapping("/deleteAllCars")
+  public void deleteAllCars() {
+    carsService.deleteAllCars();
+  }
   @PostMapping("/listcars")
   public List<Car> addListCar(@RequestBody List<Car> carList){
     return carsService.addListCar(carList);

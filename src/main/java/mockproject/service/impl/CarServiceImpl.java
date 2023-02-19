@@ -33,12 +33,10 @@ public class CarServiceImpl implements CarsService {
 
   @Override
   public void deleteById(Long id) {
-    // Check if id exist in database
     Car car = carRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found this car"));
-    carRepository.deleteById(id);
-      //"".equalsIgnoreCase()
-      //"".startsWith("");
-    }
+    car.setIsDeleted(true);
+    carRepository.save(car);
+  }
 
 
 
@@ -46,20 +44,25 @@ public class CarServiceImpl implements CarsService {
   public Car updateCar(Long id, Car car) {
     // Tao DTO se xu ly update
     Car cars = carRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found this car"));
-      Car tempCar = carRepository.findById(id).get();
-      tempCar.setName(car.getName());
-      tempCar.setCompany((car.getCompany()));
-      tempCar.setCategory(car.getCategory());
-      tempCar.setDescription(car.getDescription());
-      tempCar.setImage(car.getImage());
-      tempCar.setPrice(car.getPrice());
-      return carRepository.saveAndFlush(tempCar);
-    }
+    Car tempCar = carRepository.findById(id).get();
+    tempCar.setName(car.getName());
+    tempCar.setCompany((car.getCompany()));
+    tempCar.setCategory(car.getCategory());
+    tempCar.setDescription(car.getDescription());
+    tempCar.setImage(car.getImage());
+    tempCar.setPrice(car.getPrice());
+    return carRepository.saveAndFlush(tempCar);
+  }
 
   @Override
   public Car findById(Long id) {
     return carRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Could not find this car!!"));
+  }
+
+  @Override
+  public void deleteAllCars() {
+    carRepository.deleteAll();
   }
 }
 
