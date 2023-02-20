@@ -1,5 +1,7 @@
 package mockproject.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,13 +24,15 @@ public class CustomerInfoServ {
   private Long customerId;
 
   @Column(nullable = false)
-  @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Name cannot contain special characters")
-  private String customerName;
+  @NotNull
+  @Pattern(regexp = "^[a-zA-Z ]*$", message = "Name cannot contain special characters")
+    private String customerName;
 
   @Column(nullable = false)
   private Date customerBirthday;
 
   @Column(nullable = false)
+  @NotEmpty
   private String customerGender;
 
   public static final String PHONE_PATTERN = "^\\+84\\d{9,10}$";

@@ -1,7 +1,9 @@
 package mockproject.service.impl;
 
-import mockproject.entity.CarServices;
+import java.util.Optional;
 import mockproject.entity.CustomerInfoServ;
+import mockproject.exception.ExceptionControllerAdvice;
+import mockproject.exception.PhoneNumberExistedException;
 import mockproject.repository.CarServicesRepository;
 import mockproject.repository.CustomerInfoServRepository;
 import mockproject.service.CustomerInfoServService;
@@ -17,15 +19,28 @@ public class CustomerInfoServImpl implements CustomerInfoServService {
   private CustomerInfoServRepository customerInfoServRepository;
   @Autowired
   private CarServicesRepository carServicesRepository;
+
   @Override
   public List<CustomerInfoServ> getAllCustomerInfo() {
-    return customerInfoServRepository.findAll();
+    return customerInfoServRepository.findByStatus("Incomplete");
   }
 
   @Override
-  public CustomerInfoServ addCustomerInfo(CustomerInfoServ customerInfoServ) {
-    return customerInfoServRepository.save(customerInfoServ);
+  public CustomerInfoServ addCustomerInfo(CustomerInfoServ customerInfoServ) throws PhoneNumberExistedException {
+    if (!customerInfoServ.getCustomerName().matches("^[a-zA-Z ]+$")) {
+      throw new RuntimeException("Invalid name - name should only contain letters not numbers");
+    }
+    Optional<CustomerInfoServ> existingCustomerInfo = customerInfoServRepository.findByCustomerPhone(
+        customerInfoServ.getCustomerPhone());
+    if (existingCustomerInfo.isPresent()) {
+      throw new PhoneNumberExistedException(" " + customerInfoServ.getCustomerPhone() + " ");
+    }
+
+    else  {
+      return customerInfoServRepository.save(customerInfoServ);
+    }
   }
+
 
   @Override
   public List<CustomerInfoServ> addListCustomerInfo(List<CustomerInfoServ> customerInfoList) {
@@ -34,14 +49,18 @@ public class CustomerInfoServImpl implements CustomerInfoServService {
 
   @Override
   public void deleteCustomerInfoById(Long customerInfoID) {
-    customerInfoServRepository.deleteById(customerInfoID);
+    CustomerInfoServ customerInfoServ = customerInfoServRepository.findById(customerInfoID).orElseThrow(() -> new RuntimeException("Not found"));
+    customerInfoServ.setStatus("completed");
+    customerInfoServRepository.save(customerInfoServ);
   }
 
 
   @Override
-  public CustomerInfoServ updateCustomerInfo(Long customerInfoServId, CustomerInfoServ customerInfoServ) {
+  public CustomerInfoServ updateCustomerInfo(Long customerInfoServId,
+      CustomerInfoServ customerInfoServ) {
     CustomerInfoServ existingCustomerInfo = customerInfoServRepository.findById(customerInfoServId)
-        .orElseThrow(() -> new RuntimeException("Customer Info not found with id: " + customerInfoServId));
+        .orElseThrow(
+            () -> new RuntimeException("Customer Info not found with id: " + customerInfoServId));
 
     existingCustomerInfo.setCustomerName(customerInfoServ.getCustomerName());
     existingCustomerInfo.setCustomerBirthday(customerInfoServ.getCustomerBirthday());
@@ -56,6 +75,7 @@ public class CustomerInfoServImpl implements CustomerInfoServService {
 
   @Override
   public CustomerInfoServ getCustomerInfoById(Long customerId) {
-    return customerInfoServRepository.findById(customerId).orElseThrow(() -> new RuntimeException("Could not find customerId like this"));
+    return customerInfoServRepository.findById(customerId)
+        .orElseThrow(() -> new RuntimeException("Could not find customerId like this"));
   }
 }

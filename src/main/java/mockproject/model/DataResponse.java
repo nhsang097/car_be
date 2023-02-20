@@ -9,7 +9,7 @@ public class DataResponse {
   }
   public DataResponse(Object object){
     this.data = object;
-    this.message = "Success";
+    this.message = "Failed";
   }
   public DataResponse(boolean error, String message){
     this.error = error;
